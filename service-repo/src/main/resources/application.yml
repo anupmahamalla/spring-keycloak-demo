@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: service-template
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  jackson:
+    default-property-inclusion: non_null
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: ${REDIS_TIMEOUT:2s}
+      repositories:
+        enabled: false
+  cache:
+    redis:
+      time-to-live: ${CACHE_TTL:3m}
+
+app:
+  cache:
+    provider: ${CACHE_PROVIDER:redis}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+logging:
+  level:
+    root: INFO
+    com.example.platform.service: INFO

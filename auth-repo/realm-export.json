@@ -1,0 +1,103 @@
+{
+  "realm": "reusable-realm",
+  "enabled": true,
+  "displayName": "Reusable Realm",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "clients": [
+    {
+      "clientId": "reusable-client",
+      "name": "Reusable Client",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "bearerOnly": false,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "USER",
+        "description": "Default user role — read-only access to categories and items"
+      },
+      {
+        "name": "ADMIN",
+        "description": "Administrator role — full CRUD including delete"
+      },
+      {
+        "name": "SUPPORT",
+        "description": "Support role — full CRUD except delete on categories and items"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "user1",
+      "email": "user1@example.com",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "User",
+      "lastName": "One",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "user1pass",
+          "temporary": false
+        }
+      ],
+      "requiredActions": [],
+      "realmRoles": [
+        "USER"
+      ]
+    },
+    {
+      "username": "admin1",
+      "email": "admin1@example.com",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "One",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin1pass",
+          "temporary": false
+        }
+      ],
+      "requiredActions": [],
+      "realmRoles": [
+        "ADMIN"
+      ]
+    },
+    {
+      "username": "support1",
+      "email": "support1@example.com",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Support",
+      "lastName": "One",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "support1pass",
+          "temporary": false
+        }
+      ],
+      "requiredActions": [],
+      "realmRoles": [
+        "SUPPORT"
+      ]
+    }
+  ]
+}

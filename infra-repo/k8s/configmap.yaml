@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: platform-config
+  labels:
+    app.kubernetes.io/part-of: reusable-platform
+data:
+  SPRING_PROFILES_ACTIVE: "prod"
+  SERVER_PORT: "8080"
+  DB_HOST: "postgres"
+  DB_PORT: "5432"
+  DB_NAME: "service_db"
+  DB_USER: "service_user"
+  JWT_ISSUER_URI: "http://keycloak:8080/realms/reusable-realm"
+  KC_DB: "postgres"
+  KC_DB_URL_HOST: "postgres"
+  KC_DB_URL_PORT: "5432"
+  KC_DB_URL_DATABASE: "keycloak"
+  KC_DB_USERNAME: "keycloak"
+

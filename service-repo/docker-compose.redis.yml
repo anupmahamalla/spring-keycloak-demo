@@ -1,0 +1,20 @@
+# Redis 7.2 for local development caching.
+#
+# Start Redis:     docker compose -f docker-compose.redis.yml up -d
+# Stop Redis:      docker compose -f docker-compose.redis.yml down
+#
+# If you prefer to run WITHOUT Redis, set CACHE_PROVIDER=local:
+#   mvn spring-boot:run -Dspring-boot.run.profiles=local -Dspring-boot.run.jvmArguments="-DCACHE_PROVIDER=local"
+
+services:
+  redis:
+    image: redis:7.2-alpine
+    container_name: service-template-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5

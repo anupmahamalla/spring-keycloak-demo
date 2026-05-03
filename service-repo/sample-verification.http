@@ -1,0 +1,100 @@
+### ─────────────────────────────────────────────
+### Tokens  (replace with real values from Keycloak)
+### ─────────────────────────────────────────────
+@baseUrl    = http://localhost:8080
+@adminToken = REPLACE_WITH_ADMIN_BEARER_TOKEN
+@userToken  = REPLACE_WITH_USER_BEARER_TOKEN
+
+### ═══════════════════════════════════════
+### CATEGORIES
+### ═══════════════════════════════════════
+
+### [1] List all categories  (USER or ADMIN)
+GET {{baseUrl}}/categories
+Authorization: Bearer {{adminToken}}
+
+###
+
+### [2] Get category by ID  (USER or ADMIN)
+GET {{baseUrl}}/categories/1
+Authorization: Bearer {{adminToken}}
+
+###
+
+### [3] Create category  (ADMIN only)
+POST {{baseUrl}}/categories
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Electronics",
+  "description": "Electronic devices and accessories"
+}
+
+###
+
+### [4] Update category  (ADMIN only)
+PUT {{baseUrl}}/categories/1
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Electronics & Gadgets",
+  "description": "Updated description for electronics"
+}
+
+###
+
+### [5] Delete category  (ADMIN only)
+DELETE {{baseUrl}}/categories/1
+Authorization: Bearer {{adminToken}}
+
+###
+
+### ═══════════════════════════════════════
+### ITEMS
+### ═══════════════════════════════════════
+
+### [6] List all items  (USER or ADMIN)
+GET {{baseUrl}}/items
+Authorization: Bearer {{userToken}}
+
+###
+
+### [7] Get item by ID  (USER or ADMIN)
+GET {{baseUrl}}/items/1
+Authorization: Bearer {{userToken}}
+
+###
+
+### [8] Create item  (ADMIN only)
+POST {{baseUrl}}/items
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Laptop Pro 15",
+  "description": "High-performance laptop for professionals",
+  "price": 1299.99,
+  "categoryId": 1
+}
+
+###
+
+### [9] Update item  (ADMIN only)
+PUT {{baseUrl}}/items/1
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Laptop Pro 15 (2025)",
+  "description": "Refreshed model with better battery",
+  "price": 1199.99,
+  "categoryId": 1
+}
+
+###
+
+### [10] Delete item  (ADMIN only)
+DELETE {{baseUrl}}/items/1
+Authorization: Bearer {{adminToken}}

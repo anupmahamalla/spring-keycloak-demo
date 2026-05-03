@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_IMAGE_TAG:-16-alpine}
+    container_name: ${POSTGRES_CONTAINER_NAME:-platform-postgres}
+    environment:
+      POSTGRES_DB: ${SERVICE_DB_NAME:-service_db}
+      POSTGRES_USER: ${SERVICE_DB_USER:-service_user}
+      POSTGRES_PASSWORD: ${SERVICE_DB_PASSWORD:-service_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - service_postgres_data:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_IMAGE_TAG:-25.0}
+    container_name: ${KEYCLOAK_CONTAINER_NAME:-platform-keycloak}
+    command: ["start-dev"]
+    environment:
+      KC_DB: dev-file
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+    ports:
+      - "${KEYCLOAK_PORT:-8081}:8080"
+
+  service:
+    image: ${SERVICE_IMAGE_NAME:-service-template:latest}
+    container_name: ${SERVICE_CONTAINER_NAME:-platform-service}
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+      SERVER_PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${SERVICE_DB_NAME:-service_db}
+      DB_USER: ${SERVICE_DB_USER:-service_user}
+      DB_PASSWORD: ${SERVICE_DB_PASSWORD:-service_password}
+      JWT_ISSUER_URI: ${JWT_ISSUER_URI:-http://keycloak:8080/realms/reusable-realm}
+    ports:
+      - "${SERVICE_PORT:-8080}:8080"
+    depends_on:
+      - postgres
+      - keycloak
+
+volumes:
+  service_postgres_data:
+

@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:25.0
+          args: ["start-dev"]
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KC_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: platform-config
+                  key: KC_DB
+            - name: KC_DB_URL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: platform-config
+                  key: KC_DB_URL_HOST
+            - name: KC_DB_URL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: platform-config
+                  key: KC_DB_URL_PORT
+            - name: KC_DB_URL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: platform-config
+                  key: KC_DB_URL_DATABASE
+            - name: KC_DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: platform-config
+                  key: KC_DB_USERNAME
+            - name: KC_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: platform-secrets
+                  key: KC_DB_PASSWORD
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: platform-secrets
+                  key: KEYCLOAK_ADMIN
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: platform-secrets
+                  key: KEYCLOAK_ADMIN_PASSWORD
+
